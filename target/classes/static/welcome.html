@@ -27,15 +27,10 @@
    
    <BODY>
  		<div ng-controller="testController" ng-app="Demo">
-			<table border="5">
-			<tr>
-				<th>Product Name</th>
-				<th>Product Price</th>
+			<table>
 				<tr ng-repeat="x in list">
     				<td>{{ x.name }}</td>
     				<td>{{ x.price }}</td>
-    				<td>{{ x.description }}</td>
-    				<td><a href="cart.html?id={{x.id}}" target="_blank">Add To Cart</a>
   				</tr>
             </table>
  	
