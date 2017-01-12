@@ -1,5 +1,8 @@
-com\webstore\repositories\ProductRepository.class
 com\webstore\AppRunner.class
+com\webstore\repositories\CartRepository.class
 com\webstore\model\Product.class
-com\webstore\controller\AppController.class
 com\webstore\service\PackageService.class
+com\webstore\repositories\ProductRepository.class
+com\webstore\service\CartService.class
+com\webstore\controller\AppController.class
+com\webstore\model\CartItem.class
