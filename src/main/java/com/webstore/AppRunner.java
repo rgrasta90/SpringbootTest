@@ -41,10 +41,10 @@ public class AppRunner {
 	@PostConstruct
 	 public void greet(){
 		 System.out.println("Hello");
-			repository.save(new Product("Fifa 2017", 999));
-			repository.save(new Product("Borderlands", 500));
-			repository.save(new Product("Watchdogs 2", 1200));
-			repository.save(new Product("Diablo", 300));
+			repository.save(new Product("Fifa 2017", 999, "Newest Fifa version, incluing new teams and leagues from all over the world"));
+			repository.save(new Product("Borderlands", 500,"Join the adventure on this single and cooperative first person shooter"));
+			repository.save(new Product("Watchdogs 2", 1200,"Play as a hacker trying to defeat an evil coorporation"));
+			repository.save(new Product("Diablo", 300,"Fight against differnt types of enemies in this RPG game"));
 			
 			// fetch all Products
 			log.info("Customers found with findAll():");
