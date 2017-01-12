@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.webstore.model.Product;
+import com.webstore.service.CartService;
 import com.webstore.service.PackageService;
 
 
@@ -17,6 +19,8 @@ public class AppController {
 
 	@Autowired
 	PackageService service;
+	@Autowired 
+	CartService cartservice;
 	
 	@RequestMapping("/")
 	public String welcome(){
@@ -30,9 +34,10 @@ public class AppController {
 		return service.getAllProducts();
 	}
 	
-	@RequestMapping("/addtocart/{id}/{user}")
-	public @ResponseBody String addToCart(@RequestParam Long id, @RequestParam String user){
-		
+	@RequestMapping(value = "/addtocart", method = RequestMethod.POST)
+	public @ResponseBody String addToCart(@RequestParam(name="gameid", required=false) String gameid, @RequestParam(name="username", required=false ) String username){
+		System.out.println("In add to cart controller" + " " + username + " " + gameid);
+		cartservice.addToCart(gameid, username);
 		return null;
 	}
 
