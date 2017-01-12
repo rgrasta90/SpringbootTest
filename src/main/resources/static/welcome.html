@@ -1,0 +1,38 @@
+<HTML>
+   <HEAD>
+       <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script> 
+      <TITLE>Welcome to e shop</TITLE>
+   </HEAD>
+   
+   
+   <script type="text/javascript">
+   var app = angular.module( "Demo", [] );
+
+   app.controller("testController", function($scope, $http){
+	   $scope.list = {};
+	$scope.init = function (){	
+			    $http({
+				method:"get",
+				url:"getproducts"
+				}).then(function(response){
+					$scope.list = response.data;
+				}, function errorCallback(response) { });
+			
+			}
+	
+	$scope.init();	
+   });
+   
+   </script>
+   
+   <BODY>
+ 		<div ng-controller="testController" ng-app="Demo">
+			<table>
+				<tr ng-repeat="x in list">
+    				<td>{{ x.name }}</td>
+    				<td>{{ x.price }}</td>
+  				</tr>
+            </table>
+ 	
+   </BODY>
+</HTML>
