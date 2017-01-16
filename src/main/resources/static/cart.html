@@ -8,16 +8,31 @@
 <script type="text/javascript">
 
 function getParameters(){
-	var myParam = location.search.split('id=')[1]
+	var str = decodeURIComponent(window.location.href);
 		
-		document.getElementById("gameId").value=myParam;
+    var pos = str.indexOf("?");
+    	str = str.substring(pos+1); 
+    var res = str.split("&");
+   	var params = ["id", "name"];
+    
+    for(x=0; x<res.length;x++){
+    var tmp = res[x].split("=");
+    params[x] = tmp[1];
+    }
+    document.getElementById("name").value = params[1];
+    document.getElementById("gameid").value = params[0];
+
 }
 </script>
 
 <body onload="getParameters()">
-<form action="addtocart" method="post">
-<input id="gameId" type="text" disabled="disabled" />
-
+<form action="/shop/addtocart" method="POST">
+<table>
+<tr><td><input id="name" type="text" disabled="disabled" value="">Product name</input></td></tr>
+<tr><td><input id="username" type="text" label="username" value="">Username</input></td></tr>
+<tr><td><input type="text" disabled="disabled" id="gameid" value=""/></td></tr>
+<input type="submit" value="add to cart"/>
+</table>
 </form>
 </body>
 </html>

@@ -16,8 +16,8 @@ public class CartService {
 	@Autowired
 	ProductRepository prodrepository;
 	
-	public boolean addToCart(Long id, String user){
-		Product p = prodrepository.findOne(id);
+	public boolean addToCart(String id, String user){
+		Product p = prodrepository.findOne(Long.valueOf(id));
 		CartItem c = new CartItem(p.getName(),p.getPrice(), user);
 		repository.save(c);
 		return false;
