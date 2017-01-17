@@ -28,9 +28,9 @@ function getParameters(){
 <body onload="getParameters()">
 <form action="/shop/addtocart" method="POST">
 <table>
-<tr><td><input id="name" type="text" disabled="disabled" value="">Product name</input></td></tr>
-<tr><td><input id="username" type="text" label="username" value="">Username</input></td></tr>
-<tr><td><input type="text" disabled="disabled" id="gameid" value=""/></td></tr>
+<tr><td>Product name<input id="name" type="text" disabled="disabled" ></input></td></tr>
+<tr><td>Username<input id="username"  name="username" type="text" ></input></td></tr>
+<tr><td><input type="hidden" name="gameid" id="gameid" /></td></tr>
 <input type="submit" value="add to cart"/>
 </table>
 </form>
