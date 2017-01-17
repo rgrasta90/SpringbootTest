@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.webstore.model.CartItem;
 import com.webstore.model.Product;
 import com.webstore.repositories.CartRepository;
+import com.webstore.repositories.OrderRepository;
 import com.webstore.repositories.ProductRepository;
 
 @Service
@@ -15,11 +16,13 @@ public class CartService {
 	
 	@Autowired
 	ProductRepository prodrepository;
+
 	
-	public boolean addToCart(String id, String user){
+	public CartItem addToCart(String id, String user){
 		Product p = prodrepository.findOne(Long.valueOf(id));
 		CartItem c = new CartItem(p.getName(),p.getPrice(), user);
-		repository.save(c);
-		return false;
+		c = repository.save(c);
+	
+		return c;
 	}
 }
