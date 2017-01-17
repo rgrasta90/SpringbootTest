@@ -8,5 +8,5 @@ import com.webstore.model.Product;
 
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-	List<Product> findByName(String name);
+	Product findByName(String name);
 }
