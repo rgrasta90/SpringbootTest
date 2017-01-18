@@ -17,6 +17,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.AbstractDriverBasedDataSource;
@@ -25,6 +26,7 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.mysql.jdbc.Connection;
+import com.webstore.model.CartItem;
 import com.webstore.model.Product;
 import com.webstore.repositories.ProductRepository;
 
@@ -74,6 +76,12 @@ public class AppRunner {
 
         };
 	} 
+	
+	@Bean
+
+    public CartItem cartItem() {
+        return new CartItem();
+    }
 	
 	/*@Bean
     public DataSource dataSource() throws SQLException {

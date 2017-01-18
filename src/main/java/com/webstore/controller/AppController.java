@@ -5,7 +5,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +18,6 @@ import com.webstore.AppRunner;
 import com.webstore.model.CartItem;
 import com.webstore.model.OrderDetails;
 import com.webstore.model.Product;
-import com.webstore.service.CartService;
 import com.webstore.service.OrderService;
 import com.webstore.service.PackageService;
 
@@ -26,10 +28,13 @@ public class AppController {
 	private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
 	@Autowired
 	PackageService service;
-	@Autowired 
-	CartService cartservice;	
+	//@Autowired 
+//	CartService cartservice;	
 	@Autowired
 	OrderService orderservice;
+
+	@Autowired
+	ApplicationContext context;
 	
 	@RequestMapping("/")
 	public String welcome(){
@@ -44,13 +49,17 @@ public class AppController {
 	}
 	
 	@RequestMapping(value = "/addtocart", method = RequestMethod.POST)
-	public @ResponseBody String addToCart(@RequestParam(name="gameid", required=false) String gameid, @RequestParam(name="username", required=false ) String username){
-		System.out.println("In add to cart controller" + " " + username + " " + gameid);
-		CartItem c = cartservice.addToCart(gameid, username);
-		System.out.println("Succesfully added" + " " + c.getName() + "to cart" );
-		OrderDetails o = orderservice.saveOrder(c.getName(), username);
-		log.info("Succesfully created order" + " " + o.getId());
-		return null;
+	//public @ResponseBody Product addToCart(@RequestParam(name="gameid", required=false) long gameid){
+	public @ResponseBody Product addToCart(@RequestBody Product pr){	
+//	System.out.println("In add to cart controller" + " " + " " + gameid);
+		CartItem cart = context.getBean(CartItem.class);
+		Product p = service.getById0(pr.getId());
+		cart.addProduct(p);
+	//	CartItem c = cartservice.addToCart(gameid, username);
+		System.out.println("Succesfully added" + " " + p.getName() + "to cart" );
+		//OrderDetails o = orderservice.saveOrder(c.getName(), username);
+	//	log.info("Succesfully created order" + " " + o.getId());
+		return p;
 	}
 	
 }

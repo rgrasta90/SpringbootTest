@@ -19,4 +19,9 @@ public class PackageService {
 		ArrayList<Product> products = (ArrayList<Product>) repository.findAll();
 		return products;
 	}
+	
+	public Product getById0(long id){
+		
+		return repository.findOne(id);
+	}
 }

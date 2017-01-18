@@ -4,8 +4,8 @@
 <meta charset="ISO-8859-1">
 <title>Add to cart</title>
 </head>
-
-<script type="text/javascript">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script> 
+	<script type="text/javascript">
 
 function getParameters(){
 	var str = decodeURIComponent(window.location.href);
@@ -24,15 +24,39 @@ function getParameters(){
 
 }
 </script>
+<script type="text/javascript">
+   var app = angular.module( "AddToCart", [] );
 
+   app.controller("CartController", function($scope, $http){
+	   $scope.list = {};
+	 
+	   $scope.username;
+	   $scope.gamename;
+	$scope.addtocart = function (){	
+		       		       
+			    $http({
+				method:"post",
+				url:"/shop/addtocart"
+				}).then(function(response){
+					$scope.list = response.data;
+				}, function errorCallback(response) { });
+			
+			}
+	
+
+   });
+   
+   </script>
 <body onload="getParameters()">
+<div ng-controller="CartController" ng-app="AddToCart">
 <form action="/shop/addtocart" method="POST">
 <table>
-<tr><td>Product name<input id="name" type="text" disabled="disabled" ></input></td></tr>
-<tr><td>Username<input id="username"  name="username" type="text" ></input></td></tr>
+<tr><td>Product name<input id="name" type="text" disabled="disabled" ng-model="gamename" ></input></td></tr>
+<tr><td>Username<input id="username"  name="username" type="text" ng-model="username" ></input></td></tr>
 <tr><td><input type="hidden" name="gameid" id="gameid" /></td></tr>
-<input type="submit" value="add to cart"/>
+<input type="button" value="add to cart" ng-click='addtocart()'/>
 </table>
 </form>
+</div> 
 </body>
 </html>

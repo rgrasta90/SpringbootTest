@@ -5,10 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.webstore.model.CartItem;
 import com.webstore.model.Product;
-import com.webstore.repositories.CartRepository;
-import com.webstore.repositories.OrderRepository;
+//import com.webstore.repositories.OrderRepository;
 import com.webstore.repositories.ProductRepository;
-
+/*
 @Service
 public class CartService {
 	@Autowired
@@ -26,3 +25,4 @@ public class CartService {
 		return c;
 	}
 }
+*/
