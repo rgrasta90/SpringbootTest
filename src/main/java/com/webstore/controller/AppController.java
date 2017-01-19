@@ -6,20 +6,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.webstore.AppRunner;
 import com.webstore.model.CartItem;
-import com.webstore.model.OrderDetails;
 import com.webstore.model.Product;
+import com.webstore.model.UserAccount;
 import com.webstore.service.OrderService;
 import com.webstore.service.PackageService;
+import com.webstore.service.UserService;
 
 
 @Controller
@@ -28,8 +27,7 @@ public class AppController {
 	private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
 	@Autowired
 	PackageService service;
-	//@Autowired 
-//	CartService cartservice;	
+		
 	@Autowired
 	OrderService orderservice;
 
@@ -37,10 +35,13 @@ public class AppController {
 	ApplicationContext context;
 	CartItem cart;
 	
+	@Autowired
+	UserService userservice;
+	
 	@RequestMapping("/")
 	public String welcome(){
-		System.out.println("In welcome controller");
-		return "welcome.html";
+		System.out.println("In Loginr");
+		return "login.html";
 	}
 	
 	@RequestMapping("/getproducts")
@@ -74,5 +75,13 @@ public class AppController {
 		
 		return cart;
 	}
+	
+	@RequestMapping(value="/createuser", method=RequestMethod.POST)
+	public @ResponseBody UserAccount createUser(@RequestBody UserAccount u){
+		return  userservice.createUser(u);
+		
+	}
+	
+	
 	
 }
