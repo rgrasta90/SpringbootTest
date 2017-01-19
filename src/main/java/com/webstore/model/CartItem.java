@@ -15,12 +15,31 @@ public class CartItem {
 		this.products.add(p);
 	}
 	
-	public long getSum(){
+	public List<Product> getProducts(){
+		return this.products;
+	}
+	
+	public long getTotalPrice(){
+		return this.totalPrice;
+		
+	}
+	public void getSum(){
 		long sum = 0;
 		for(Product p: products){
 		sum = sum + p.getPrice();	
 		}
-		return sum;
+		
+		this.totalPrice = sum;
+	}
+	
+	public void removeItem(Product pr){
+		for(Product p : this.products){
+			if(pr.getName().equalsIgnoreCase(p.getName())){
+				this.getProducts().remove(p);
+				break;
+			}
+		}
+		
 	}
 
 }

@@ -1,16 +1,21 @@
 <HTML>
    <HEAD>
-       <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
       <TITLE>Welcome to e shop</TITLE>
    </HEAD>
    
    
    <script type="text/javascript">
-   var app = angular.module( "Demo", [] );
+   var app = angular.module( "Demo", ['ngCookies'] );
 
-   app.controller("testController", function($scope, $http){
+   app.controller("testController",['$scope', '$http', '$cookies', '$cookieStore', function($scope, $http, $cookies, $cookieStore){
 	   $scope.list = {};
-	$scope.init = function (){	
+	   $scope.cart = {};
+	   $scope.totalprice;
+	   
+	$scope.init = function (){
+	   $scope.cart = $cookies.cartcookie;
 			    $http({
 				method:"get",
 				url:"getproducts"
@@ -19,8 +24,7 @@
 				}, function errorCallback(response) { });
 			
 			}
-			$scope.gamename;
-		    $scope.gameid = 4
+
 		$scope.addtocart = function (game){			       		       
 				    $http({
 					method:"post",
@@ -32,12 +36,37 @@
 						"price" : game.price
 				}
 					}).then(function(response){
-
+						$scope.cart = response.data.products;
+						$scope.totalprice = response.data.totalPrice;
+						
+						$cookies.put("cartcookie", $scope.cart, {
+						    expires: new Date(2018, 1, 1)
+						});
+					
 					}, function errorCallback(response) { });
 				
 				}
+		$scope.removefromcart = function (game){			       		       
+		    $http({
+			method:"post",
+			url:"/shop/removefromcart",
+			data: {
+				"name" : game.name,
+				"id" : game.id,
+				"description" : game.description,
+				"price" : game.price
+		}
+			}).then(function(response){
+				$scope.cart = response.data.products;
+				$scope.totalprice = response.data.totalPrice;
+				$cookies.cartcookie = $scope.cart;
+			}, function errorCallback(response) { });
+		
+		}    
+
+	
 	$scope.init();	
-   });
+   }]);
    
    </script>
    
@@ -51,11 +80,27 @@
     				<td>{{ x.name }}</td>
     				<td>{{ x.price }}</td>
     				<td>{{ x.description }}</td>
-    				<td>{{ x.id }}</td>
-    				<td><a href="cart.html?id={{x.id}}&name={{x.name}}" target="_blank">Add To Cart</a>
+    				<!--<td><a href="cart.html?id={{x.id}}&name={{x.name}}" target="_blank">Add To Cart</a> --> 
     				<td><a href="" ng-click="addtocart(x);">Add To Cart 2</a>
   				</tr>
             </table>
- 	
+            <div id="cart" ng-show="cart.length > 0">
+ 			<table border="5">
+			<tr>
+				<th>Product Name</th>
+				<th>Product Price</th>
+			</tr>
+			<tr ng-repeat="y in cart">
+			<td>{{y.name}}</td>
+			<td>{{y.price}}</td>
+			<td><a href="" ng-click="removefromcart(y);">Remove item</a> 
+			</tr> 
+			<tr>
+			<td>Total Price:</td>
+			<td>{{totalprice}}</td>
+			</tr>
+            </table>
+            </div>
+    	</div>
    </BODY>
 </HTML>

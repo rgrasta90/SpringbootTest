@@ -35,6 +35,7 @@ public class AppController {
 
 	@Autowired
 	ApplicationContext context;
+	CartItem cart;
 	
 	@RequestMapping("/")
 	public String welcome(){
@@ -50,16 +51,28 @@ public class AppController {
 	
 	@RequestMapping(value = "/addtocart", method = RequestMethod.POST)
 	//public @ResponseBody Product addToCart(@RequestParam(name="gameid", required=false) long gameid){
-	public @ResponseBody Product addToCart(@RequestBody Product pr){	
+	public @ResponseBody CartItem addToCart(@RequestBody Product pr){	
 //	System.out.println("In add to cart controller" + " " + " " + gameid);
-		CartItem cart = context.getBean(CartItem.class);
+		cart = context.getBean(CartItem.class);
 		Product p = service.getById0(pr.getId());
 		cart.addProduct(p);
+		cart.getSum();
 	//	CartItem c = cartservice.addToCart(gameid, username);
 		System.out.println("Succesfully added" + " " + p.getName() + "to cart" );
 		//OrderDetails o = orderservice.saveOrder(c.getName(), username);
 	//	log.info("Succesfully created order" + " " + o.getId());
-		return p;
+		return cart;
+	}
+	
+	@RequestMapping(value="/removefromcart", method = RequestMethod.POST)
+	public @ResponseBody CartItem removeFromCart(@RequestBody Product pr){
+		if(cart == null){
+		   cart = context.getBean(CartItem.class);
+		}
+		cart.removeItem(pr);
+		cart.getSum();
+		
+		return cart;
 	}
 	
 }

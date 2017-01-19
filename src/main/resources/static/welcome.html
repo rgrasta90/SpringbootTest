@@ -1,7 +1,7 @@
 <HTML>
    <HEAD>
-       <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
-       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular-cookies.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
       <TITLE>Welcome to e shop</TITLE>
    </HEAD>
    
@@ -9,14 +9,13 @@
    <script type="text/javascript">
    var app = angular.module( "Demo", ['ngCookies'] );
 
-   app.controller("testController",['$cookies','$cookieStore', function($scope, $http, $cookies, $cookieStore){
+   app.controller("testController",['$scope', '$http', '$cookies', '$cookieStore', function($scope, $http, $cookies, $cookieStore){
 	   $scope.list = {};
 	   $scope.cart = {};
 	   $scope.totalprice;
 	   
 	$scope.init = function (){
-	    $cookies.NameOfMyCookie = "Setting a value";
-        alert($cookies.NameOfMyCookie);
+	   $scope.cart = $cookies.cartcookie;
 			    $http({
 				method:"get",
 				url:"getproducts"
@@ -39,7 +38,11 @@
 					}).then(function(response){
 						$scope.cart = response.data.products;
 						$scope.totalprice = response.data.totalPrice;
-						$cookieStore.put('cart', cart);
+						
+						$cookies.put("cartcookie", $scope.cart, {
+						    expires: new Date(2018, 1, 1)
+						});
+					
 					}, function errorCallback(response) { });
 				
 				}
@@ -56,6 +59,7 @@
 			}).then(function(response){
 				$scope.cart = response.data.products;
 				$scope.totalprice = response.data.totalPrice;
+				$cookies.cartcookie = $scope.cart;
 			}, function errorCallback(response) { });
 		
 		}    
