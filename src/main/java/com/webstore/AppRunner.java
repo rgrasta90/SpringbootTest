@@ -14,10 +14,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.webstore.model.CartItem;
 import com.webstore.model.Product;
+import com.webstore.model.UserSession;
 import com.webstore.repositories.ProductRepository;
 
 @Configuration
@@ -31,13 +33,14 @@ public class AppRunner {
 	private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
 	
 	@PostConstruct
-	 public void greet(){
+	 public void loadProducts(){
 		 System.out.println("Hello");
 			repository.save(new Product("Fifa 2017", 999, "Newest Fifa version, incluing new teams and leagues from all over the world"));
 			repository.save(new Product("Borderlands", 500,"Join the adventure on this single and cooperative first person shooter"));
 			repository.save(new Product("Watchdogs 2", 1200,"Play as a hacker trying to defeat an evil coorporation"));
 			repository.save(new Product("Diablo", 300,"Fight against differnt types of enemies in this RPG game"));
-			
+			repository.save(new Product("Dark souls", 700,"RPG action gane where you will fight against hardest bosses ever"));
+
 			// fetch all Products
 			log.info("Customers found with findAll():");
 			log.info("-------------------------------");
@@ -68,9 +71,15 @@ public class AppRunner {
 	} 
 	
 	@Bean
-
+	@Scope("session")
     public CartItem cartItem() {
         return new CartItem();
+    }
+	
+	@Bean
+	@Scope("session")
+    public UserSession userSession() {
+        return new UserSession();
     }
 	
 	/*@Bean
