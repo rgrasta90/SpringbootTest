@@ -3,50 +3,25 @@
 <head>
  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
+  <script type="text/javascript" src="javascript/usercontroller.js"></script>
+ 
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
-   <script type="text/javascript">
-var app = angular.module( "Demo", ['ngCookies'] );
-app.controller("createUserController",['$scope', '$http',  '$cookieStore', function($scope, $http, $cookieStore){
-	$scope.username="";
-	$scope.password="";
-	$scope.account="";
-			$scope.createUser = function (){
-				
-				if($scope.username.length == 0 || $scope.password.length == 0)
-					alert("Fields cannot be empty");
-				
-				else{
-				    $http({
-					method:"post",
-					url:"/shop/createuser",
-					data: {
-						"name" : $scope.username,
-						"password" : $scope.password,
-				}
-					}).then(function(response){
-						$scope.account=response.data;
-					}, function errorCallback(response) { });
-				
-				}
-			}
-   }]);
-	</script>
 
+<body>
 <a href="login.html">Go to home page</a>
 <div  ng-controller="createUserController" ng-app="Demo">
 	<form action="/shop/createuser" method="post">
 	Username:<input type="text" name="username" id="user" ng-model="username" required/>
 	Password:<input type="password" id="pass" name="password" ng-model="password" required/>
-	<input type="button" ng-click="createUser();" value="Register"/>
+	<input type="button" ng-click="validateUser();" value="Register"/>
 	</form> 
 
 	<div ng-show="account.name.length > 0 && account.password.length >0">
 		<p>Below account has been created:</p>
-		<p>{{account.name}}</p>
-		<p>{{account.password}}</p>
+		Username:<p>{{account.name}}</p>
+		Password:<p>{{account.password}}</p>
 	</div>
 	
 </div>
