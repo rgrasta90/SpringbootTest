@@ -10,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.webstore.AppRunner;
 import com.webstore.model.CartItem;
 import com.webstore.model.Product;
 import com.webstore.model.UserAccount;
+import com.webstore.model.UserSession;
 import com.webstore.service.OrderService;
 import com.webstore.service.PackageService;
 import com.webstore.service.UserService;
@@ -33,10 +35,12 @@ public class AppController {
 
 	@Autowired
 	ApplicationContext context;
-	CartItem cart;
 	
 	@Autowired
 	UserService userservice;
+	 
+	CartItem cart;	
+	UserSession user;
 	
 	@RequestMapping("/")
 	public String welcome(){
@@ -46,7 +50,8 @@ public class AppController {
 	
 	@RequestMapping("/getproducts")
 	public 	@ResponseBody List<Product> getDetails(){
-		System.out.println("In get all products controller");
+		log.info("Getting al proucts");
+		
 		return service.getAllProducts();
 	}
 	
@@ -59,9 +64,9 @@ public class AppController {
 		cart.addProduct(p);
 		cart.getSum();
 	//	CartItem c = cartservice.addToCart(gameid, username);
-		System.out.println("Succesfully added" + " " + p.getName() + "to cart" );
 		//OrderDetails o = orderservice.saveOrder(c.getName(), username);
 	//	log.info("Succesfully created order" + " " + o.getId());
+		log.info("Added to cart: " + p.getName());
 		return cart;
 	}
 	
@@ -78,10 +83,37 @@ public class AppController {
 	
 	@RequestMapping(value="/createuser", method=RequestMethod.POST)
 	public @ResponseBody UserAccount createUser(@RequestBody UserAccount u){
-		return  userservice.createUser(u);
+		log.info("Creating user");
+		u = userservice.createUser(u);
+		log.info("Created user: " + u.getName());
+
+		return  u;
+	}
+	
+	@RequestMapping(value="/validateuser", method=RequestMethod.GET)
+	public @ResponseBody UserAccount userExists(@RequestParam(name="name") String name){
+		log.info("In validate controller");
+		return this.userservice.userExists(name);
+		
+	}
+
+	@RequestMapping(value="/loginaction", method=RequestMethod.POST)
+	public String login(@RequestParam(name="username") String uname,
+			@RequestParam(name="password") String pwd){
+		UserAccount u = this.userservice.login(uname, pwd);
+	if(!(u == null)){
+		this.user = context.getBean(UserSession.class);
+		this.user.setUsername(u.getName());
+		return "redirect:welcome.html";
+	}
+	else
+		return "redirect:login.html";
 		
 	}
 	
-	
-	
+	@RequestMapping(value="/getusersession", method=RequestMethod.GET)
+	public @ResponseBody UserSession getUserSession(){
+ 	 	
+		return this.user;
+	}
 }
