@@ -18,7 +18,17 @@ public class UserService {
 	}
 	
 	public UserAccount createUser(UserAccount u){
-		
 		return this.repository.save(u);
 	}
+
+	public UserAccount userExists(String name) {
+		UserAccount u = this.repository.findByName(name);
+		return u;
+	}
+	
+	public UserAccount login(String username, String password){
+	return this.repository.findByNameAndPassword(username, password);
+	}
+	
+
 }
