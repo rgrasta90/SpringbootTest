@@ -5,7 +5,8 @@ import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 
-@Scope(value="session")
+
+@Scope("session")
 public class CartItem {
 
 	private List<Product> products = new ArrayList<Product>();

@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.context.annotation.Scope;
+
 @Entity
 public class UserAccount {
 	
@@ -14,7 +16,7 @@ public class UserAccount {
 	private String name;
 	private String password;
 	
-	
+
 	public Long getId() {
 		return id;
 	}
