@@ -1,9 +1,12 @@
-var app = angular.module( "Demo", [] );
+var app = angular.module( "myModule", [] );
 app.controller("createUserController",['$scope', '$http', function($scope, $http){
 	$scope.username="";
 	$scope.password="";
 	$scope.account="";
+	
 			$scope.createUser = function (){
+				
+				
 				
 				if($scope.username.length == 0 || $scope.password.length == 0)
 					alert("Fields cannot be empty");
@@ -39,4 +42,5 @@ app.controller("createUserController",['$scope', '$http', function($scope, $http
 				
 				}
 			
+	
    }]);

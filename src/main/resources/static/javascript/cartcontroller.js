@@ -1,11 +1,17 @@
- var app = angular.module( "Demo", ['ngCookies'] );
+ var app = angular.module( "myModule2", ['ngCookies', 'myModule3'] );
 
-   app.controller("testController",['$scope', '$http',  '$cookieStore', function($scope, $http, $cookieStore){
+   app.controller("testController",['$scope', '$http','$cookieStore','userService', 
+                                    function($scope, $http, $cookieStore, userService){
 	   $scope.list = {};
 	   $scope.cart = {};
 	   $scope.totalprice;
-	   
+	   $scope.usersession;
+				
+	   $scope.getUserSession= function(){
+		   $scope.usersession=userService.getSessionPromise(); 
+	   }
 	$scope.init = function (){
+				$scope.getUserSession();
 				$scope.cart = $cookieStore.get('myFavorite');
 				$scope.totalprice =  $cookieStore.get('totalPrice'); 
 			    $http({

@@ -3,12 +3,14 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
     <script src="javascript/cartcontroller.js"></script>  
+    <script src="javascript/userservice.js"></script>  
       <TITLE>Welcome to e shop</TITLE>
    </HEAD>
    <script type="text/javascript">  
    </script>
    <BODY>
- 		<div ng-controller="testController" ng-app="Demo">
+ 		<div ng-controller="testController" ng-app="myModule2">
+ 		<h2>{{$usersession}}</h2>
 			<table border="5">
 			<tr>
 				<th>Product Name</th>
