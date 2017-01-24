@@ -56,16 +56,11 @@ public class AppController {
 	}
 	
 	@RequestMapping(value = "/addtocart", method = RequestMethod.POST)
-	//public @ResponseBody Product addToCart(@RequestParam(name="gameid", required=false) long gameid){
 	public @ResponseBody CartItem addToCart(@RequestBody Product pr){	
-//	System.out.println("In add to cart controller" + " " + " " + gameid);
 		cart = context.getBean(CartItem.class);
 		Product p = service.getById0(pr.getId());
 		cart.addProduct(p);
 		cart.getSum();
-	//	CartItem c = cartservice.addToCart(gameid, username);
-		//OrderDetails o = orderservice.saveOrder(c.getName(), username);
-	//	log.info("Succesfully created order" + " " + o.getId());
 		log.info("Added to cart: " + p.getName());
 		return cart;
 	}
@@ -113,7 +108,7 @@ public class AppController {
 	
 	@RequestMapping(value="/getusersession", method=RequestMethod.GET)
 	public @ResponseBody UserSession getUserSession(){
- 	 	
+ 	 	log.info("returning" + this.user.getUsername());
 		return this.user;
 	}
 }
