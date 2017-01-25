@@ -8,19 +8,20 @@
 	   $scope.usersession;
 				
 	   $scope.getUserSession= function(){
-		   $scope.usersession=userService.getSessionPromise(); 
+		   $scope.usersession=userService.getsession(); 
+		   console.log("in controller" + $scope.usersession);
 	   }
 	$scope.init = function (){
 				$scope.getUserSession();
-				$scope.cart = $cookieStore.get('myFavorite');
-				$scope.totalprice =  $cookieStore.get('totalPrice'); 
-			    $http({
-				method:"get",
-				url:"getproducts"
-				}).then(function(response){
-					$scope.list = response.data;
+				//$scope.cart = $cookieStore.get('myFavorite');
+			//	$scope.totalprice =  $cookieStore.get('totalPrice'); 
+			  //  $http({
+			//	method:"get",
+			//	url:"getproducts"
+			//	}).then(function(response){
+				//	$scope.list = response.data;
 					   
-				}, function errorCallback(response) { });
+			//	}, function errorCallback(response) { });
 			
 			}
 

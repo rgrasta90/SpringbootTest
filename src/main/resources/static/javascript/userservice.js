@@ -1,28 +1,27 @@
 var myModule = angular.module('myModule3', []);
-myModule.service('userService',['$http', function($http) {
-    var userSession;
-	var myDataPromise;
-	
-	  this.getSessionPromise= function (){
-		    myDataPromise = this.getSession();
-			myDataPromise.then(function(result) {  			       
-			       console.log("data.name "+ result);
-			       userSession = result;
-			    });
-		}
+myModule.service('userService',['$http','$q', function($http,$q) {
+	// var defered = $q.defer();
+     //var promise = defered.promise;
+	var user;
+    return {
+    	getsession : function(){
+    	    $http({
+    			method:"get",
+    			url:"getusersession"
+    			}).then(function(response){
+    				console.log(response.data);
+    				return response.data;
+    				   
+    			}, function errorCallback(response) { 
+    				 //defered.reject(response);
+    			});	
+        }
+    }
 
+
+	    
+	
   
-   this.getSession=function (){
-	    $http({
-		method:"get",
-		url:"getusersession"
-		}).then(function(response){
-			console.log(response.data);
-			return response.data;
-			   
-		}, function errorCallback(response) { });	
-	}
-  
-   return userSession;
+
 
 }]);
