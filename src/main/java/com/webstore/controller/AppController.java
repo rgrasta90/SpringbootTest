@@ -99,6 +99,8 @@ public class AppController {
 	if(!(u == null)){
 		this.user = context.getBean(UserSession.class);
 		this.user.setUsername(u.getName());
+		log.info(String.valueOf(u.hashCode()));
+		
 		return "redirect:welcome.html";
 	}
 	else
@@ -108,6 +110,7 @@ public class AppController {
 	
 	@RequestMapping(value="/getusersession", method=RequestMethod.GET)
 	public @ResponseBody UserSession getUserSession(){
+		
  	 	log.info("returning" + this.user.getUsername());
 		return this.user;
 	}
