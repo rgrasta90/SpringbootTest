@@ -2,7 +2,6 @@ package com.webstore.model;
 
 import org.springframework.context.annotation.Scope;
 
-@Scope("session")
 public class UserSession {
 	private String username;
 

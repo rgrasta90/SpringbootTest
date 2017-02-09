@@ -1,8 +1,10 @@
 package com.webstore;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.mysql.jdbc.Connection;
 import com.webstore.model.CartItem;
 import com.webstore.model.Product;
 import com.webstore.model.UserSession;
@@ -82,17 +86,16 @@ public class AppRunner {
         return new UserSession();
     }
 	
-	/*@Bean
+	@Bean
     public DataSource dataSource() throws SQLException {
-            DriverManagerDataSource dataSource = new DriverManagerDataSource();
-             
+            DriverManagerDataSource dataSource = new DriverManagerDataSource();     
             dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-            dataSource.setUrl("jdbc:mysql://localhost:3306");
+            dataSource.setUrl("jdbc:mysql://localhost:3306/shop");
             dataSource.setUsername("root");
             dataSource.setPassword("admin");
-          // Connection con= (Connection) dataSource.getConnection();
+            Connection con= (Connection) dataSource.getConnection();
             return dataSource;
     }
-    */
+    
 
 }

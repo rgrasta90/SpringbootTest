@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+<script src="javascript/ordercontroller.js"></script>  
+<script src="javascript/userservice.js"></script>  
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
+<p>Your order has been placed succesfully!</p>
 
+<div ng-controller="testController" ng-app="myModule4">
+<a href="" ng-click="getOrders();">Retrieve your orders!</a>
+</div>
 </body>
 </html>

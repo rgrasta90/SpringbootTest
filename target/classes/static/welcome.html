@@ -2,78 +2,15 @@
    <HEAD>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
+    <script src="javascript/cartcontroller.js"></script>  
+    <script src="javascript/userservice.js"></script>  
       <TITLE>Welcome to e shop</TITLE>
    </HEAD>
-   
-   
-   <script type="text/javascript">
-   var app = angular.module( "Demo", ['ngCookies'] );
-
-   app.controller("testController",['$scope', '$http',  '$cookieStore', function($scope, $http, $cookieStore){
-	   $scope.list = {};
-	   $scope.cart = {};
-	   $scope.totalprice;
-	   
-	$scope.init = function (){
-				$scope.cart = $cookieStore.get('myFavorite');
-				$scope.totalprice =  $cookieStore.get('totalPrice'); 
-			    $http({
-				method:"get",
-				url:"getproducts"
-				}).then(function(response){
-					$scope.list = response.data;
-					   
-				}, function errorCallback(response) { });
-			
-			}
-
-		$scope.addtocart = function (game){			       		       
-				    $http({
-					method:"post",
-					url:"/shop/addtocart",
-					data: {
-						"name" : game.name,
-						"id" : game.id,
-						"description" : game.description,
-						"price" : game.price
-				}
-					}).then(function(response){
-						$scope.cart = response.data.products;
-						$scope.totalprice = response.data.totalPrice;
-					//	$cookieStore.put('myFavorite',$scope.cart);
-					//	$cookieStore.put('totalPrice',$scope.totalprice);
-				
-					}, function errorCallback(response) { });
-				
-				}
-		$scope.removefromcart = function (game){			       		       
-		    $http({
-			method:"post",
-			url:"/shop/removefromcart",
-			data: {
-				"name" : game.name,
-				"id" : game.id,
-				"description" : game.description,
-				"price" : game.price
-		}
-			}).then(function(response){
-				$scope.cart = response.data.products;
-				$scope.totalprice = response.data.totalPrice;
-				$cookieStore.put('myFavorite',$scope.cart);
-				$cookieStore.put('totalPrice',$scope.totalprice);
-
-			}, function errorCallback(response) { });
-		
-		}    
-
-	
-	$scope.init();	
-   }]);
-   
+   <script type="text/javascript">  
    </script>
-   
    <BODY>
- 		<div ng-controller="testController" ng-app="Demo">
+ 		<div ng-controller="testController" ng-app="myModule2">
+ 		<h2>Welcome {{usersession}}</h2>
 			<table border="5">
 			<tr>
 				<th>Product Name</th>
@@ -86,6 +23,7 @@
     				<td><a href="" ng-click="addtocart(x);">Add To Cart 2</a>
   				</tr>
             </table>
+            <form action="/shop/submitorder" method="POST">
             <div id="cart" ng-show="cart.length > 0">
  			<table border="5">
 			<tr>
@@ -100,9 +38,11 @@
 			<tr>
 			<td>Total Price:</td>
 			<td>{{totalprice}}</td>
+			<td><input type="submit" value="submit order!"/>
 			</tr>
             </table>
             </div>
+            </form>
     	</div>
    </BODY>
 </HTML>

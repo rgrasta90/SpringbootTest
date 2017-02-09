@@ -23,6 +23,7 @@
     				<td><a href="" ng-click="addtocart(x);">Add To Cart 2</a>
   				</tr>
             </table>
+            <form action="/shop/submitorder" method="POST">
             <div id="cart" ng-show="cart.length > 0">
  			<table border="5">
 			<tr>
@@ -37,9 +38,11 @@
 			<tr>
 			<td>Total Price:</td>
 			<td>{{totalprice}}</td>
+			<td><input type="submit" value="submit order!"/>
 			</tr>
             </table>
             </div>
+            </form>
     	</div>
    </BODY>
 </HTML>

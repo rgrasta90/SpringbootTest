@@ -6,18 +6,20 @@
 	   $scope.cart = {};
 	   $scope.totalprice;
 	   $scope.usersession;
-				
-
-	   
+					   
 	$scope.init = function (){
 		userService.getPosts()
 		        .then(function(posts) {		 
 		          console.log(posts + " in controller");	
-		          $scope.usersession = posts.username;  
+		          $scope.usersession = posts.username;
+		          userService.getCart($scope.usersession)
+		          .then(function(cart) {		 
+		            console.log(cart + " in controller");	
+		  			$scope.cart = cart.products;
+		  			$scope.totalprice = cart.totalPrice;
+		          });
 		        });
-		    	  
-				$scope.cart = $cookieStore.get('myFavorite');
-				$scope.totalprice =  $cookieStore.get('totalPrice'); 
+		
 			    $http({
 				method:"get",
 				url:"getproducts"
@@ -41,8 +43,6 @@
 					}).then(function(response){
 						$scope.cart = response.data.products;
 						$scope.totalprice = response.data.totalPrice;
-						$cookieStore.put('myFavorite',$scope.cart);
-						$cookieStore.put('totalPrice',$scope.totalprice);
 				
 					}, function errorCallback(response) { });
 				
@@ -60,12 +60,20 @@
 			}).then(function(response){
 				$scope.cart = response.data.products;
 				$scope.totalprice = response.data.totalPrice;
-				$cookieStore.put('myFavorite',$scope.cart);
-				$cookieStore.put('totalPrice',$scope.totalprice);
+				//$cookieStore.put('myFavorite',$scope.cart);
+				//$cookieStore.put('totalPrice',$scope.totalprice);
 
 			}, function errorCallback(response) { });
 		
 		}    
+		
+		$scope.order = function(){
+			$http({
+				method:"post",
+				url:"/shop/submitorder"
+				}).then(function(response){
+				}, function errorCallback(response) { });
+		}
 
 	
 	$scope.init();	

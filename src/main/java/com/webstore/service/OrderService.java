@@ -1,25 +1,34 @@
 package com.webstore.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.webstore.model.CartItem;
 import com.webstore.model.OrderDetails;
-import com.webstore.model.Product;
-import com.webstore.repositories.*;
+import com.webstore.repositories.OrderRepository;
 
 @Service
 public class OrderService {
 
-	//@Autowired
-	//OrderRepository repository;
 	@Autowired
-	ProductRepository productrepository;
+	OrderRepository repository;
 	
-	public OrderDetails saveOrder(String name, String username){
-	//	Product p = null;
-		//p = productrepository.findByName(name);
-		//OrderDetails o = new OrderDetails(p.getName(),p.getPrice(),username);
-		return null;
+	public OrderDetails submitOrder(CartItem c){
+		OrderDetails o = new OrderDetails();
+		o.setUsername(c.getUsername());
+		o.setTotalprice(c.getTotalPrice());
+	//	o.setProducts(c.getProducts());
+		
+		return this.repository.save(o);	 
 	}
 	
+	public OrderDetails findOrder(Long id){
+		return this.repository.findOne(id);
+	}
+	
+	public List<OrderDetails> findOrdersByUsername(String username){
+		return this.repository.findByUsername(username);
+	}
 }

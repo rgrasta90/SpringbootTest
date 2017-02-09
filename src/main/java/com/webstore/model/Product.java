@@ -1,11 +1,17 @@
 package com.webstore.model;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="product")
 public class Product {
 
 	protected Product(){
@@ -25,6 +31,20 @@ public class Product {
 	private int price;
 	private String description;
 	
+	/*@ManyToOne
+	@JoinColumn(name="ORDER_ID")
+	private OrderDetails order;
+	
+	
+
+	public OrderDetails getOrder() {
+		return order;
+	}
+
+	public void setOrder(OrderDetails order) {
+		this.order = order;
+	}*/
+
 	public String getDescription() {
 		return description;
 	}

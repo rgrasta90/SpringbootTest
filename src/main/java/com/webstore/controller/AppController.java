@@ -2,6 +2,9 @@ package com.webstore.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.hibernate.collection.internal.PersistentBag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.webstore.AppRunner;
 import com.webstore.model.CartItem;
+import com.webstore.model.OrderDetails;
 import com.webstore.model.Product;
 import com.webstore.model.UserAccount;
 import com.webstore.model.UserSession;
@@ -28,23 +32,22 @@ public class AppController {
 
 	private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
 	@Autowired
-	PackageService service;
-		
-	@Autowired
-	OrderService orderservice;
-
+	PackageService service;		
 	@Autowired
 	ApplicationContext context;
-	
 	@Autowired
 	UserService userservice;
-	 
-	CartItem cart;	
-	UserSession user;
+	@Autowired
+	HttpSession session; 
+	@Autowired
+	OrderService orderservice;
+	
+
 	
 	@RequestMapping("/")
 	public String welcome(){
 		System.out.println("In Loginr");
+		log.info("SESSION ID" +" " + session.getId());
 		return "login.html";
 	}
 	
@@ -52,27 +55,32 @@ public class AppController {
 	public 	@ResponseBody List<Product> getDetails(){
 		log.info("Getting al proucts");
 		
+		
+		
 		return service.getAllProducts();
 	}
 	
 	@RequestMapping(value = "/addtocart", method = RequestMethod.POST)
 	public @ResponseBody CartItem addToCart(@RequestBody Product pr){	
-		cart = context.getBean(CartItem.class);
+		UserSession user = context.getBean(UserSession.class);
+		CartItem cart = context.getBean(CartItem.class);
+		cart.setUsername(user.getUsername());
 		Product p = service.getById0(pr.getId());
-		cart.addProduct(p);
-		cart.getSum();
+
+			cart.addProduct(p);
+			cart.getSum();
+
+
 		log.info("Added to cart: " + p.getName());
 		return cart;
 	}
 	
 	@RequestMapping(value="/removefromcart", method = RequestMethod.POST)
 	public @ResponseBody CartItem removeFromCart(@RequestBody Product pr){
-		if(cart == null){
-		   cart = context.getBean(CartItem.class);
-		}
+		
+		CartItem cart = context.getBean(CartItem.class);
 		cart.removeItem(pr);
 		cart.getSum();
-		
 		return cart;
 	}
 	
@@ -95,10 +103,11 @@ public class AppController {
 	@RequestMapping(value="/loginaction", method=RequestMethod.POST)
 	public String login(@RequestParam(name="username") String uname,
 			@RequestParam(name="password") String pwd){
+		
 		UserAccount u = this.userservice.login(uname, pwd);
 	if(!(u == null)){
-		this.user = context.getBean(UserSession.class);
-		this.user.setUsername(u.getName());
+		UserSession user = context.getBean(UserSession.class);
+		user.setUsername(u.getName());
 		log.info(String.valueOf(u.hashCode()));
 		
 		return "redirect:welcome.html";
@@ -110,8 +119,31 @@ public class AppController {
 	
 	@RequestMapping(value="/getusersession", method=RequestMethod.GET)
 	public @ResponseBody UserSession getUserSession(){
-		
- 	 	log.info("returning" + this.user.getUsername());
-		return this.user;
+		UserSession user = context.getBean(UserSession.class);
+ 	 	log.info("returning" + user.getUsername());
+		return user;
+	}
+	
+	@RequestMapping(value="/getcart", method=RequestMethod.GET)
+	public @ResponseBody CartItem getCart(@RequestParam(name="username") String uname ){
+		CartItem cart = context.getBean(CartItem.class);
+
+		 return cart;
+	}
+	@RequestMapping(value="/submitorder", method=RequestMethod.POST)
+	public String generateOrder(){
+		CartItem cart = context.getBean(CartItem.class);
+		this.orderservice.submitOrder(cart);
+     	return "redirect:orderdetails.html";
+	}
+	
+	@RequestMapping(value="/getorders", method=RequestMethod.GET)
+	public @ResponseBody List<OrderDetails> getOrders(){
+		UserSession user = context.getBean(UserSession.class);
+		List<OrderDetails> orders = this.orderservice.findOrdersByUsername(user.getUsername());
+		OrderDetails o = orders.get(0);
+ 	
+ 	
+		return orders;
 	}
 }
