@@ -27,7 +27,7 @@ import com.webstore.model.UserSession;
 import com.webstore.repositories.ProductRepository;
 
 @Configuration
-@ComponentScan({"com.webstore.controller","com.webstore.repositories","com.webstore.model", "com.webstore.service", "com.webstore"})
+@ComponentScan({"com.webstore.controller","com.webstore.repositories","com.webstore.model", "com.webstore.service"})
 @EnableAutoConfiguration
 @EnableJpaRepositories("com.webstore.repositories")
 public class AppRunner {
@@ -36,7 +36,7 @@ public class AppRunner {
 	ProductRepository repository;
 	private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
 	
-	/*@PostConstruct
+	@PostConstruct
 	 public void loadProducts(){
 		 System.out.println("Hello");
 			repository.save(new Product("Fifa 2017", 999, "Newest Fifa version, incluing new teams and leagues from all over the world"));
@@ -53,7 +53,7 @@ public class AppRunner {
 			}
 			log.info("");
 	 }
-	 */
+	 
 
 	public static void main(String[] args){
 		SpringApplication.run(AppRunner.class, args);

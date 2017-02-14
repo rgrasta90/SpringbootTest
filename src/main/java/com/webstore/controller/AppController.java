@@ -106,6 +106,9 @@ public class AppController {
 		
 		UserAccount u = this.userservice.login(uname, pwd);
 	if(!(u == null)){
+		if(!u.getName().equals(context.getBean(UserSession.class).getUsername())){
+			context.getBean(CartItem.class).clearCart();
+		}
 		UserSession user = context.getBean(UserSession.class);
 		user.setUsername(u.getName());
 		log.info(String.valueOf(u.hashCode()));
