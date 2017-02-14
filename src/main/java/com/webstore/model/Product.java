@@ -1,5 +1,6 @@
 package com.webstore.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,20 +31,9 @@ public class Product {
 	private String name;
 	private int price;
 	private String description;
-	
-	/*@ManyToOne
-	@JoinColumn(name="ORDER_ID")
-	private OrderDetails order;
-	
-	
+	 
 
-	public OrderDetails getOrder() {
-		return order;
-	}
 
-	public void setOrder(OrderDetails order) {
-		this.order = order;
-	}*/
 
 	public String getDescription() {
 		return description;

@@ -19,7 +19,7 @@ public class OrderService {
 		OrderDetails o = new OrderDetails();
 		o.setUsername(c.getUsername());
 		o.setTotalprice(c.getTotalPrice());
-	//	o.setProducts(c.getProducts());
+		o.setProducts(c.getProducts());
 		
 		return this.repository.save(o);	 
 	}
