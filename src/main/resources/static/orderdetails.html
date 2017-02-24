@@ -12,18 +12,25 @@
 
 <div ng-controller="testController" ng-app="myModule4">
 <a href="" ng-click="getOrders();">Retrieve your orders!</a>
-<table ng-repeat="x in orders">
+<table ng-repeat="order in orders" border="2">
 <tr>
-	<th>Order ID </th>
-	<th> Products </th>
-	<th> Total Price</th>
+	<th>Order ID: </th>
+	<th> Products: </th>
+	<th> Total Price:</th>
 </tr>
 <tr>
-<td>{{x.id}}</td>
-<td>{{}}</td>
-<td>{{x.totalprice}}</td>
+<td>{{order.id}}</td>
+<td>
+	<ul>
+         <li ng-repeat="product in order.products"> 
+           {{product.name}} 
+         </li>
+	</ul>
+</td>	
+<td>{{order.totalprice}}</td>
 </tr>
 </table>
+<a href="/shop/gohome">Go home</a>
 </div>
 </body>
 </html>

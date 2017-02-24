@@ -149,4 +149,15 @@ public class AppController {
  	
 		return orders;
 	}
+	
+
+	@RequestMapping(value="/gohome", method=RequestMethod.GET)
+	public String  createNewOrder(){
+		CartItem cart = context.getBean(CartItem.class);
+		cart.clearCart();
+ 	
+ 	
+		return "welcome.html";
+	}
+	
 }

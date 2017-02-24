@@ -36,7 +36,7 @@ public class AppRunner {
 	ProductRepository repository;
 	private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
 	
-	@PostConstruct
+	 @PostConstruct
 	 public void loadProducts(){
 		 System.out.println("Hello");
 			repository.save(new Product("Fifa 2017", 999, "Newest Fifa version, incluing new teams and leagues from all over the world"));
