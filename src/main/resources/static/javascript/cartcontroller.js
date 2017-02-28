@@ -1,4 +1,4 @@
- var app = angular.module( "myModule2", ['ngCookies', 'myModule3'] );
+ var app = angular.module('myModule2', ['ngCookies', 'myModule3']);
 
    app.controller("testController",['$scope', '$http','$cookieStore','userService', 
                                     function($scope, $http, $cookieStore, userService){

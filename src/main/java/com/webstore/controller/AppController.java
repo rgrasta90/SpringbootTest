@@ -134,10 +134,11 @@ public class AppController {
 		 return cart;
 	}
 	@RequestMapping(value="/submitorder", method=RequestMethod.POST)
-	public String generateOrder(){
+	public @ResponseBody Boolean generateOrder(){
 		CartItem cart = context.getBean(CartItem.class);
 		this.orderservice.submitOrder(cart);
-     	return "redirect:orderdetails.html";
+     //	return "redirect:orderdetails.html";
+		return new Boolean(true);
 	}
 	
 	@RequestMapping(value="/getorders", method=RequestMethod.GET)

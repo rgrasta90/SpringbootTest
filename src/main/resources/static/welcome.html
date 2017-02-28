@@ -2,15 +2,19 @@
    <HEAD>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
-    <script src="javascript/cartcontroller.js"></script>  
-    <script src="javascript/userservice.js"></script>  
+	<script src="javascript/userservice.js"></script>  
+	<script src="javascript/cartcontroller.js"></script>
+    <script src="javascript/ordercontroller.js"></script>    
       <TITLE>Welcome to e shop</TITLE>
+      
    </HEAD>
    <script type="text/javascript">  
    </script>
    <BODY>
- 		<div ng-controller="testController" ng-app="myModule2">
+   <div id="main" ng-app="myModule2">
+ 		<div ng-controller="testController">
  		<h2>Welcome {{usersession}}</h2>
+        <a href="" ng-click="getOrders();">Retrieve your orders!</a>
 			<table border="5">
 			<tr>
 				<th>Product Name</th>
@@ -19,10 +23,11 @@
     				<td>{{ x.name }}</td>
     				<td>{{ x.price }}</td>
     				<td>{{ x.description }}</td>
-    				<!--<td><a href="cart.html?id={{x.id}}&name={{x.name}}" target="_blank">Add To Cart</a> --> 
-    				<td><a href="" ng-click="addtocart(x);">Add To Cart 2</a>
+    				<td><a href="" ng-click="addtocart(x);">Add To Cart</a>
   				</tr>
             </table>
+           </div>
+           <div ng-controller="orderController">
             <form action="/shop/submitorder" method="POST">
             <div id="cart" ng-show="cart.length > 0">
  			<table border="5">
@@ -38,11 +43,12 @@
 			<tr>
 			<td>Total Price:</td>
 			<td>{{totalprice}}</td>
-			<td><input type="submit" value="submit order!"/>
+			<td><input type="button" ng-click="submbitOrder();" value="submit order!"/>
 			</tr>
             </table>
             </div>
             </form>
     	</div>
+    </div>	
    </BODY>
 </HTML>
