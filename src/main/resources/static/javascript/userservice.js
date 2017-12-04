@@ -6,20 +6,20 @@ myModule.service('userService',['$http','$q', function($http,$q) {
 	var cart;
 	this.getPosts = function() {
 		  
-	        var deferred = $q.defer();
+	       // var deferred = $q.defer();
 	 
-	        $http.get('/shop/getusersession')
+	       return  $http.get('/shop/getusersession')
 	          .then(function(result) {
-	            posts = result.data;
-	            deferred.resolve(posts);
+	            return  result.data;	            
+	            //deferred.resolve(posts);
 	          }, function(error) {
 	            posts = error;
-	            deferred.reject(error);
+	         //   deferred.reject(error);
 	          });
 	 
-	        posts = deferred.promise;
+	       // posts = deferred.promise;
 	      
-	       return $q.when(posts);
+	       //return $q.when(posts);
 	    };
 	    
 	    this.getCart = function(usernamev) {
