@@ -1,4 +1,4 @@
- var app = angular.module('myModule2', ['ngCookies', 'myModule3']);
+ var app = angular.module( "myModule2", ['ngCookies', 'myModule3'] );
 
    app.controller("testController",['$scope', '$http','$cookieStore','userService', 
                                     function($scope, $http, $cookieStore, userService){
@@ -8,12 +8,16 @@
 	   $scope.usersession;
 					   
 	$scope.init = function (){
-		userService.getPosts()
-		        .then(function(posts) {		 
+		var prm;
+		var prm2;
+		 prm = userService.getPosts();
+		 
+		        prm.then(function(posts) {		 
 		          console.log(posts + " in controller");	
 		          $scope.usersession = posts.username;
-		          userService.getCart($scope.usersession)
-		          .then(function(cart) {		 
+		        
+		          prm2 = userService.getCart($scope.usersession);	          
+		         prm2.then(function(cart) {		 
 		            console.log(cart + " in controller");	
 		  			$scope.cart = cart.products;
 		  			$scope.totalprice = cart.totalPrice;
