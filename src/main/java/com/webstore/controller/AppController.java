@@ -137,7 +137,7 @@ public class AppController {
 	public @ResponseBody Boolean generateOrder(){
 		CartItem cart = context.getBean(CartItem.class);
 		this.orderservice.submitOrder(cart);
-     //	return "redirect:orderdetails.html";
+     //return "redirect:orderdetails.html";
 		return new Boolean(true);
 	}
 	

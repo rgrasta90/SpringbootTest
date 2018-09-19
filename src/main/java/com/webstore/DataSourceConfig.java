@@ -10,10 +10,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.mysql.jdbc.Connection;
 
-@Configuration
+
 public class DataSourceConfig {
 
-	@Bean
     public DataSource dataSource() throws SQLException {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();     
             dataSource.setDriverClassName("com.mysql.jdbc.Driver");

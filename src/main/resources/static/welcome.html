@@ -11,10 +11,8 @@
    <script type="text/javascript">  
    </script>
    <BODY>
-   <div id="main" ng-app="myModule2">
- 		<div ng-controller="testController">
+   <div id="main" ng-app="myModule2" ng-controller="testController">
  		<h2>Welcome {{usersession}}</h2>
-        <a href="" ng-click="getOrders();">Retrieve your orders!</a>
 			<table border="5">
 			<tr>
 				<th>Product Name</th>
@@ -26,10 +24,8 @@
     				<td><a href="" ng-click="addtocart(x);">Add To Cart</a>
   				</tr>
             </table>
-           </div>
-           <div ng-controller="orderController">
             <form action="/shop/submitorder" method="POST">
-            <div id="cart" ng-show="cart.length > 0">
+            < div id="cart" ng-show="cart.length > 0>
  			<table border="5">
 			<tr>
 				<th>Product Name</th>
@@ -46,9 +42,9 @@
 			<td><input type="button" ng-click="submbitOrder();" value="submit order!"/>
 			</tr>
             </table>
+			        <a href="" ng-click="getOrders();">Retrieve your orders!</a>            
             </div>
             </form>
-    	</div>
-    </div>	
+    	</div>	
    </BODY>
 </HTML>
