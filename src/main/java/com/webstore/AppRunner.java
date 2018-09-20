@@ -25,6 +25,7 @@ import com.webstore.model.CartItem;
 import com.webstore.model.Product;
 import com.webstore.model.UserSession;
 import com.webstore.repositories.ProductRepository;
+import com.webstore.repositories.TestRepository;
 
 @Configuration
 @ComponentScan({"com.webstore.controller","com.webstore.repositories","com.webstore.model", "com.webstore.service"})
@@ -34,6 +35,8 @@ public class AppRunner {
 
 	@Autowired
 	ProductRepository repository;
+	@Autowired
+	TestRepository repo;
 	private static final Logger log = LoggerFactory.getLogger(AppRunner.class);
 	
 	 @PostConstruct
@@ -44,7 +47,8 @@ public class AppRunner {
 			repository.save(new Product("Watchdogs 2", 1200,"Play as a hacker trying to defeat an evil coorporation"));
 			repository.save(new Product("Diablo", 300,"Fight against differnt types of enemies in this RPG game"));
 			repository.save(new Product("Dark souls", 700,"RPG action gane where you will fight against hardest bosses ever"));
-
+			
+			repo.insert(new Product("Red dead redemption", 999, "Western open world game"));
 			// fetch all Products
 			log.info("Customers found with findAll():");
 			log.info("-------------------------------");
